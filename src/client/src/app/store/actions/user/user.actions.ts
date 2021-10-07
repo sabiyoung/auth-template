@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { Error } from 'mongoose';
+import { Tweet } from '../../../../../../shared/models/tweet.model';
 import { User } from '../../../../../../shared/models/user.model';
 
 export const loadUsers = createAction(
@@ -79,4 +80,22 @@ export const loginUserSuccess = createAction(
 export const loginUserFailure = createAction(
   '[User] Login User Failure',
   props<{ error: Error }>()
+);
+export const UserTweet = createAction(
+  '[User] User Tweet',
+  props<{data: Tweet}>()
+);
+
+export const UserTweetSuccess = createAction(
+  '[User]  User Tweet Success',
+  props<{ data: Tweet}>()
+);
+
+export const UserTweetFailure = createAction(
+  '[User] User Tweet Failure',
+  props<{ error: Error }>()
+);
+
+export const loginNavigateSuccess = createAction(
+  '[User]  login navivage success',
 );

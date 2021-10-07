@@ -13,12 +13,16 @@ import {
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
+  loginNavigateSuccess,
   loginUser,
   loginUserFailure,
   loginUserSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
+  UserTweet,
+  UserTweetFailure,
+  UserTweetSuccess,
 } from '../../actions/user/user.actions';
 
 @Injectable()
@@ -82,6 +86,42 @@ export class UserEffects {
     )
   )
 );
+
+loginSuccess$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(loginUserSuccess),
+  mergeMap((action) =>
+    this.userService.loginNavigate().pipe(
+      map( () => loginNavigateSuccess())
+    )
+
+  )
+)
+);
+
+$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(loginUser),
+  mergeMap((action) =>
+    this.userService.login(action.data).pipe(
+      map((data) => loginUserSuccess({ data })),
+      catchError((error) => of(loginUserFailure({ error })))
+    )
+  )
+)
+);
+
+createUserTweets$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserTweet),
+      mergeMap((action) =>
+        this.userService.createTweets(action.data).pipe(
+          map((data) => UserTweetSuccess({ data })),
+          catchError((error) => of(UserTweetFailure({ error })))
+        )
+      )
+    )
+  );
 
   constructor(private actions$: Actions, private userService: UserService) {}
 }

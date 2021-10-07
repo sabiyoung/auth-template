@@ -22,8 +22,13 @@
     "@ngrx/entity": "^12.4.0",
     "@ngrx/store": "^12.4.0",
     "@ngrx/store-devtools": "^12.4.0",
+    "ngx-socket-io": "^4.1.0",
+    "path": "^0.12.7",
     "rxjs": "~6.6.0",
+    "socket.io-client": "^4.2.0",
+    "stream": "^0.0.2",
     "tslib": "^2.2.0",
+    "zlib": "^1.0.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

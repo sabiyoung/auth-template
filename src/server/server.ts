@@ -6,15 +6,15 @@ import { UserModel } from "./schemas/user.schema.js";
 import mongoose from "mongoose";
 import jwt from 'jsonwebtoken';
 import cookieParser from "cookie-parser";
-
 import dotenv from "dotenv";
 import { authHandler } from "./middleware/auth.middleware.js";
+import { createServer } from "http";
+import { Server } from "socket.io";
+import { User } from "../shared/models/user.model.js";
+import { TweetModel } from "./schemas/tweet.schema.js";
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 console.log(access_secret);
-
-
-
 
 
 const saltRounds = 10;
@@ -48,6 +48,40 @@ app.get("/posts", function (req, res) {
       res.json({ errors: err });
     });
 });
+
+///////
+app.get("/tweets",  authHandler, function (req, res) {
+  UserModel.find({tweet: req.body.user.tweet}, '-password')
+    .then((data) => res.json({ data }))
+    .catch((err) => {
+      res.status(501);
+      res.json({ errors: err });
+    });
+});
+
+app.post("/create-tweet", authHandler, function (req: any, res) {
+ 
+      const {text} = req.body;
+  const newTweet = new TweetModel({
+ text, 
+ user: req.user._id
+  });
+ console.log(newTweet, '*')
+ newTweet
+    .save()
+    .then((data) => {
+      res.json({ data });
+    })
+    .catch((err) => {
+      console.log(err)
+      res.status(501);
+      res.json({ errors: err });
+    });
+  })
+   
+  
+
+//////
 
 app.get("/users", authHandler, function (req: any, res) {
   UserModel.find({email: req.user.email}, '-password')
@@ -142,7 +176,7 @@ app.post("/login", function (req, res) {
           const accessToken = jwt.sign({user}, access_secret)
           res.cookie('jwt', accessToken, {
               httpOnly: true,
-              maxAge: 60 * 1000,
+              maxAge: 60 * 60 * 1000,
           })
           res.json({message: 'Successfully Logged In'})
         } else {
@@ -155,7 +189,24 @@ app.post("/login", function (req, res) {
     });
 });
 
-app.listen(PORT, function () {
+// const app = express();
+// const server = http.createServer(app);
+// let io = new Server(server,{
+//   cors: {origin: ['http://localhost:4200']}
+// });
+
+
+const server = createServer(app);
+let io = new Server(server,{
+    cors: {origin: ['http://localhost:4200']}
+  });
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+socket.emit('user tweet', "here is my tweet") 
+});
+
+server.listen(PORT, function () {
   console.log(`starting at localhost http://localhost:${PORT}`);
 });
 

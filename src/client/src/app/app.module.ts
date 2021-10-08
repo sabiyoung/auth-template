@@ -20,8 +20,10 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { SideBarComponent } from './pages/side-bar/side-bar.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { UserPostPageComponent } from './pages/user-post-page/user-post-page.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
 @NgModule({
+
   declarations: [
     AppComponent,
     UsersListComponent,
@@ -44,8 +46,14 @@ import { UserPostPageComponent } from './pages/user-post-page/user-post-page.com
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreModule.forFeature(fromUser.userFeatureKey, fromUser.reducer),
     EffectsModule.forRoot([UserEffects]),
+    BrowserAnimationsModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
+
+

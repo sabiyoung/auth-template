@@ -61,9 +61,9 @@ app.get("/tweets",  authHandler, function (req, res) {
 
 app.post("/create-tweet", authHandler, function (req: any, res) {
  
-      const {text} = req.body;
+      const {text, img} = req.body;
   const newTweet = new TweetModel({
- text, 
+ text, img,
  user: req.user._id
   });
  console.log(newTweet, '*')
@@ -189,11 +189,7 @@ app.post("/login", function (req, res) {
     });
 });
 
-// const app = express();
-// const server = http.createServer(app);
-// let io = new Server(server,{
-//   cors: {origin: ['http://localhost:4200']}
-// });
+
 
 
 const server = createServer(app);

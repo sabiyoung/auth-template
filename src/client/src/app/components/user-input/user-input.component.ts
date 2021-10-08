@@ -6,6 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store';
 import {
@@ -27,6 +28,7 @@ export class UserInputComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder,
      private store: Store<AppState>,
+     private router: Router
     ) {
     this.addUser = this.fb.group({
       name: ['', Validators.required],
@@ -66,8 +68,7 @@ export class UserInputComponent implements OnInit, OnChanges {
     this.addUser.reset();
   }
 
-login() {
-    this.store.dispatch(loginUser({ data: this.addUser.value }))
-    // this.router.navigateByUrl('/home')
-  }
+signin() {
+  this.router.navigate(['sign-in'])
+}
 }

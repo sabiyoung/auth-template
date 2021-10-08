@@ -18,6 +18,7 @@ export class UsersListComponent implements OnInit {
   @Input() public users: User[] = [];
   @Input() public selectedUser: User | null = null;
 
+
   constructor(
     private userService: UserService,
     private store: Store<AppState>,

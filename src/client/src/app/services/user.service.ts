@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { map } from 'rxjs/operators';
 import { User } from '../../../../shared/models/user.model';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { Tweet } from './../../../../shared/models/tweet.model';
 
 @Injectable({
@@ -13,11 +13,16 @@ export class UserService {
   selectedUserId = '';
 
   constructor(private api: ApiService,
-    private router: Router) {}
+    private router: Router,
+
+    ) {}
 
   getUsers() {
     return this.api.get<{ data: User[] }>('users').pipe(map((res) => res.data));
   }
+  // getTweets() {
+  //   return this.api.get<{ data: Tweet[] }>('tweets')
+  // }
   createUser(user: User) {
     return this.api
       .post<{ data: User }>('create-user', user)

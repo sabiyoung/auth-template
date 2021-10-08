@@ -13,16 +13,26 @@ import { environment } from '../environments/environment';
 import * as fromUser from './store/reducers/user/user.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user/user.effects';
-import { PageUsersComponent } from './pages/page-users/page-users.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { HomePageComponent } from './pages/home-page/home-page.component';
+import { UserPageComponent } from './pages/user-page/user-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { SideBarComponent } from './pages/side-bar/side-bar.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import { UserPostPageComponent } from './pages/user-post-page/user-post-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     UserInputComponent,
-    PageUsersComponent,
-    NavigationComponent
+    NavigationComponent,
+    HomePageComponent,
+    UserPageComponent,
+    LoginPageComponent,
+    SideBarComponent,
+    RegisterPageComponent,
+    UserPostPageComponent
   ],
   imports: [
     BrowserModule,

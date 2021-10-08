@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AppState } from 'src/app/store';
-import { loginUser } from 'src/app/store/actions/user/user.actions';
-import { Router } from '@angular/router';
-import { UsersListComponent } from 'src/app/components/users-list/users-list.component';
-import { UserService } from 'src/app/services/user.service';
+import { createUser, loginUser, updateUser } from 'src/app/store/actions/user/user.actions';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { User } from '../../../../../shared/models/user.model';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -13,15 +12,27 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(
-    private store: Store<AppState>,
-    private router: Router,
-    private userService: UserService ) { }
+  addUser: FormGroup;
 
-  ngOnInit(): void {
+  constructor(private fb: FormBuilder,
+     private store: Store<AppState>,
+    ) {
+    this.addUser = this.fb.group({
+      email: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(3)]),
+      ],
+      password: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(5)]),
+      ],
+    });
   }
-  login() {
-     this.router.navigateByUrl('/home')
+
+  ngOnInit(): void {}
+
+login() {
+    this.store.dispatch(loginUser({ data: this.addUser.value }))
   }
 }
 

@@ -13,12 +13,12 @@ import { User } from '../../../../../shared/models/user.model';
 export class RegisterPageComponent implements OnInit {
 
 
-  users$: Observable<User[]>;
+  // users$: Observable<User[]>;
   selectedUser$: Observable<User | null>;
   constructor(
     private store: Store<AppState>,
   ) {
-    this.users$ = this.store.select(usersSelector);
+    // this.users$ = this.store.select(usersSelector);
     this.selectedUser$ = this.store.select(selectedUserSelector);
    }
 

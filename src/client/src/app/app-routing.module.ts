@@ -10,11 +10,11 @@ import { UserPostPageComponent } from './pages/user-post-page/user-post-page.com
 
 
 const routes: Routes = [
-  {path: 'users', component: UserPageComponent},
+
    {path: 'sign-in', component: LoginPageComponent},
-  {path: 'register', component: RegisterPageComponent},
   {path: 'posts', component: UserPostPageComponent},
-  {path: '**', redirectTo:" posts"}
+  {path: '', component: HomePageComponent},
+  {path: '**', redirectTo:" sign-up"}
 
 
 ];

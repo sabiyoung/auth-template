@@ -15,7 +15,7 @@ export class ApiService {
       withCredentials: true
     });
   }
-  post<T>(resourceName: string, data: Postable) {
+  post<T>(resourceName: string, data: any) {
     return this.http.post<T>(this.baseUrl + resourceName, data, {
       withCredentials: true
     });

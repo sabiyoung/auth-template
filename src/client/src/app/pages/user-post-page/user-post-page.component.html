@@ -1,3 +1,15 @@
-<p>user-post-page works!</p>
-<textarea #Input></textarea>
-<button (click)="createTweet(Input.value)">tweet</button>
+<!-- <p>user-post-page works!</p> -->
+<div class="tweet">
+
+<div  class="tweet-box">
+
+  <img mat-card-image class="imgs" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjMMGl4wi4Xt2BD4jhnmdrW9abK9CFjvCAQ&usqp=CAU" alt="image">
+  <input class="tweet-input" placeholder="what's hapning?" #Input />
+
+</div>
+<div class="tweet-url">
+  <input type="text" placeholder="Enter Image URL">
+</div>
+<button  (click)="createTweet(Input.value)">tweet</button>
+<p>{{Input.value}}</p>
+</div>

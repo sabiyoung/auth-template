@@ -1,0 +1,25 @@
+.imgs {
+  height: 50px;
+  width: 50px;
+  border-radius: 60%;
+}
+.tweet-box {
+  display: flex;
+
+}
+.tweet {
+  margin: 30px;
+}
+button
+{
+  margin-left: 180px;
+}
+.tweet-input{
+  padding: 10px;
+}
+.tweet-url{
+  margin-left: 50px;
+  > input{
+    padding-left: 17px;
+  }
+}

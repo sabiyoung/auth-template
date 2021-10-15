@@ -1,15 +1,98 @@
-<!-- <p>user-post-page works!</p> -->
-<div class="tweet">
+<div class="main-container">
+  <div>
+    <app-side-bar></app-side-bar>
+  </div>
+  <div class="feed">
+    <div class="feed__header">
+      <h2>Home</h2>
+    </div>
+    <div class="tweet">
+      <div class="tweet-box">
+        <img
+          mat-card-image
+          class="imgs"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjMMGl4wi4Xt2BD4jhnmdrW9abK9CFjvCAQ&usqp=CAU"
+          alt="image"
+        />
+        <input class="input-tweet" placeholder="What's happening?" #Input />
+      </div>
 
-<div  class="tweet-box">
+      <div class="tweet-button">
+        <!-- <button class="upload">upload</button> -->
+        <mat-icon class="tweet-icons">image</mat-icon>
+        <mat-icon class="tweet-icons gif">gif</mat-icon>
+        <mat-icon class="tweet-icons">poll</mat-icon>
+        <mat-icon class="tweet-icons"> sentiment_satisfied_alt</mat-icon>
+        <mat-icon class="tweet-icons">schedule</mat-icon>
+        <button
+          class="tweetBox__tweetButton"
+          (click)="createTweet(Input.value)"
+        >
+          tweet
+        </button>
+      </div>
+    </div>
 
-  <img mat-card-image class="imgs" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjMMGl4wi4Xt2BD4jhnmdrW9abK9CFjvCAQ&usqp=CAU" alt="image">
-  <input class="tweet-input" placeholder="what's hapning?" #Input />
+    <div class="post">
+      <div class="post__body">
+        <div class="post__header">
+          <ul class="post_tweet">
+            <li *ngFor="let tweet of tweets$ | async">
+              <app-user-profile></app-user-profile>
 
-</div>
-<div class="tweet-url">
-  <input type="text" placeholder="Enter Image URL">
-</div>
-<button  (click)="createTweet(Input.value)">tweet</button>
-<p>{{Input.value}}</p>
-</div>
+              <span [innerHTML]="tweet.text"></span> <br />
+
+              <mat-icon class="tweet_likes"> chat_bubble_outline</mat-icon>
+              <!-- {{comment.text.length}} -->
+              <mat-icon class="tweet_likes">repeat_icon</mat-icon>
+              <mat-icon class="tweet_likes" (click)="onIncrement(tweet)"
+                >favorite</mat-icon>
+                <span class="span-like"> {{ tweet.likes }}</span>
+              <mat-icon class="tweet_likes">share</mat-icon>
+              <br />
+              <span
+                ><input class="input-tweetOne" type="text" placeholder="Tweet your reply" #Input />
+                <button   class="tweetBox_tweet" (click)="createComment(Input.value, tweet)">
+                  reply
+                </button></span
+              >
+              <ng-container *ngFor="let comment of comments$ | async">
+                <p class="post_tweet" *ngIf="comment.tweetID === tweet._id">
+               <span>   {{ comment.text }}</span>
+                </p>
+              </ng-container>
+
+              <br />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="last-container">
+      <div class="tweet-container">
+        <h2>What's happening</h2>
+        <div class="tweet__input">
+          <mat-icon class="searchIcon">search</mat-icon>
+          <input placeholder="Search Twitter" type="text" />
+        </div>
+        <app-user-profile></app-user-profile>
+        <b>  Adele releases new single Easy on Me</b>
+        <p>
+
+Adele’s latest single Easy On Me has <br>
+ been released, givingfans their first <br>
+ glimpse into 30, the singer’s <br>
+ first studio album in six years.
+ <br> Keep it here for updates and reactions.
+        </p>
+        <img
+          mat-card-image
+          class="images"
+          src=" https://pbs.twimg.com/semantic_core_img/1448353664628756480/KUJPEd-1?format=jpg&name=small"
+          alt="image"
+        />
+      </div>
+    </div>
+  </div>
+

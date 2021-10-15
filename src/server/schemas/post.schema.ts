@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { Post } from '../../shared/models/post.model'
+import type { Post } from '../../shared/models/post.model.js'
 
 const postSchema = new mongoose.Schema<Post>({
     title: {type: String, required: true},

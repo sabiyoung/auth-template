@@ -1,5 +1,5 @@
 import type mongoose from 'mongoose';
-import type { User } from './user.model';
+import type { User } from './user.model.js';
 export interface Post {
     title: string;
     body: string;

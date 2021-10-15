@@ -12,6 +12,11 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { User } from "../shared/models/user.model.js";
 import { TweetModel } from "./schemas/tweet.schema.js";
+import { CommentModel } from "./schemas/comment.schema.js";
+import multer from "multer";
+import { GridFsStorage } from "multer-gridfs-storage";
+import crypto from "crypto";
+import path from "path";
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 console.log(access_secret);
@@ -20,24 +25,49 @@ console.log(access_secret);
 const saltRounds = 10;
 
 const app = express();
-const PORT = 3501;
-
+const PORT = 3502;
+let gfs;
+const mongoURI = "mongodb://localhost:27017/test";
 mongoose
-  .connect("mongodb://localhost:27017/test")
+  .connect(mongoURI)
   .then(() => {
     console.log("Connected to DB Successfully");
+    gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
+      bucketName: "uploads",
+    });
   })
   .catch((err) => console.log("Failed to Connect to DB", err));
+// Storage
+const storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+        const fileInfo = {
+          filename: file.originalname,
+          bucketName: "uploads",
+        };
+        resolve(fileInfo);
 
+    });
+  },
+});
+
+const upload = multer({
+  storage,
+});
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:4200', 'http://localhost:3501', 'http://localhost:8080']
+    origin: ['http://localhost:4200', 'http://localhost:3502', 'http://localhost:8080']
 }));
 app.use(express.json());
 
 app.get("/", function (req, res) {
   res.json({ message: "test" });
+});
+
+app.post("/upload", upload.single("file"), (req, res) => {
+  res.redirect("/");
 });
 
 app.get("/posts", function (req, res) {
@@ -50,8 +80,8 @@ app.get("/posts", function (req, res) {
 });
 
 ///////
-app.get("/tweets",  authHandler, function (req, res) {
-  UserModel.find({tweet: req.body.user.tweet}, '-password')
+app.get("/tweets",function (req, res) {
+TweetModel.find()
     .then((data) => res.json({ data }))
     .catch((err) => {
       res.status(501);
@@ -61,9 +91,9 @@ app.get("/tweets",  authHandler, function (req, res) {
 
 app.post("/create-tweet", authHandler, function (req: any, res) {
  
-      const {text, img} = req.body;
+      const {text, img, _id, likes, disLikes } = req.body;
   const newTweet = new TweetModel({
- text, img,
+ text,
  user: req.user._id
   });
  console.log(newTweet, '*')
@@ -74,12 +104,83 @@ app.post("/create-tweet", authHandler, function (req: any, res) {
     })
     .catch((err) => {
       console.log(err)
-      res.status(501);
+      res.status(403);
       res.json({ errors: err });
     });
-  })
-   
+
+   });
+  //////
+///// comments
+  app.get("/comments",function (req, res) {
+    CommentModel.find()
+        .then((data) => res.json({ data }))
+        .catch((err) => {
+          res.status(501);
+          res.json({ errors: err });
+        });
+    });
+    
+    app.post("/create-comment", authHandler, function (req: any, res) {
+     
+          const {text, img, tweet} = req.body;
+      const newComment = new CommentModel({
+     text,
+     tweetID: tweet._id
+      });
+     console.log(newComment, '*')
+     newComment
+        .save()
+        .then((data) => {
+          res.json({ data });
+        })
+        .catch((err) => {
+          console.log(err)
+          res.status(501);
+          res.json({ errors: err });
+        });
+    
+       });
+       
+/////
+  app.put("/increment-tweet-like/:id", function (req, res) {
+    console.log("Update user like");
+  TweetModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $inc: { likes: 1 },
+      },
+      {
+        new: true,
+      },
+      function (err, updateLike) {
+        if (err) {
+          res.send("Error liking user");
+        } else {
+          res.json(updateLike);
+        }
+      }
+    );
+  });
   
+  app.put("/decrement-tweet-like/:id", function (req, res) {
+    console.log("Update user dislike");
+  TweetModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $inc: { disLikes: 1 },
+      },
+      {
+        new: true,
+      },
+      function (err, updateLike) {
+        if (err) {
+          res.send("Error liking user");
+        } else {
+          res.json(updateLike);
+        }
+      }
+    );
+  });
 
 //////
 
@@ -117,6 +218,8 @@ app.post("/create-user", function (req, res) {
   
   });
 });
+
+
 
 app.post("/create-post", function (req, res) {
   const { title, body } = req.body;

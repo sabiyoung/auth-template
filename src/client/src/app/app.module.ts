@@ -22,6 +22,10 @@ import { RegisterPageComponent } from './pages/register-page/register-page.compo
 import { UserPostPageComponent } from './pages/user-post-page/user-post-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatCardModule} from '@angular/material/card';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { FollowerListComponent } from './pages/follower-list/follower-list.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
 
   declarations: [
@@ -34,13 +38,18 @@ import {MatCardModule} from '@angular/material/card';
     LoginPageComponent,
     SideBarComponent,
     RegisterPageComponent,
-    UserPostPageComponent
+    UserPostPageComponent,
+
+    UserProfileComponent,
+      FollowerListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MatInputModule,
+    MatIconModule,
     ReactiveFormsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],

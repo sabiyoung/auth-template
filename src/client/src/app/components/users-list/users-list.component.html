@@ -1,12 +1,25 @@
 
-<ol>
-  <li [ngStyle]= "{ color: checkSelected(selectedUser, user) }" *ngFor='let user of users'>
-      name: {{user.name}} <br>
-      email: {{user.email}} <br>
-      username: {{user.username}} <br>
-      id: {{user._id}}
-      <button (click) = "deleteUser(user)">Delete</button>
-      <button (click) = "selectUser(user, selectedUser)">Select & Update</button>
-      <br> <br>
-  </li>
-</ol>
+
+
+    <div>
+      <img
+      mat-card-image
+      class="imgs"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjMMGl4wi4Xt2BD4jhnmdrW9abK9CFjvCAQ&usqp=CAU"
+      alt="image"
+    />
+    <div class="post__headerText">
+           <h3>
+        <p [ngStyle]= "{ color: checkSelected(selectedUser, user) }" *ngFor='let user of users'>
+          <span className="post__headerSpecial">  <b>  {{user.name}} </b> 	<mat-icon class="ckeck_list">beenhere</mat-icon>
+            @{{user.username}}
+          </span>
+
+        </p>
+      </h3>
+    </div>
+
+
+
+
+    </div>

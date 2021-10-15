@@ -4,7 +4,7 @@
     <input type="text" formControlName='username' placeholder="username"><br>
     <input type="text" formControlName='email' placeholder="email"><br>
     <input type="text" formControlName='password' placeholder="password"><br>
-    <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'>{{(selectedUser) ? 'Update User' : 'Sign up'}}</button>
+    <button (click)='postUser(selectedUser)' [disabled]='addUser.invalid'(click)="signin()">{{(selectedUser) ? 'Update User' : 'Sign up'}}</button>
      <button (click)="signin()">Sign in</button>
   </form>
 </div>

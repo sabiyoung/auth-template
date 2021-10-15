@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class SocketService {
 socket: any;
-readonly uri: string =  "ws://localhost:3501";
+readonly uri: string =  "ws://localhost:3502";
   constructor(
     ) {
 this.socket = io.io(this.uri)
@@ -25,4 +25,6 @@ this.socket = io.io(this.uri)
   emit(eventName: string, data: any) {
     this.socket.emit(eventName, data)
   }
+
+  
 }

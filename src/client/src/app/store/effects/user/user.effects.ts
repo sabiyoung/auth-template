@@ -4,12 +4,24 @@ import { EMPTY, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import {
+  createComment,
+  createCommentFailure,
+  createCommentSuccess,
+  createTweet,
+  createTweetFailure,
+  createTweetSuccess,
   createUser,
   createUserFailure,
   createUserSuccess,
   deleteUser,
   deleteUserFailure,
   deleteUserSuccess,
+  loadComments,
+  loadCommentsFailure,
+  loadCommentsSuccess,
+  loadTweetFailure,
+  loadTweets,
+  loadTweetSuccess,
   loadUsers,
   loadUsersFailure,
   loadUsersSuccess,
@@ -17,12 +29,19 @@ import {
   loginUser,
   loginUserFailure,
   loginUserSuccess,
+  updateComments,
+  updateCommentsFailure,
+  updateCommentsSuccess,
+  updateDislikes,
+  updateDislikesFailure,
+  updateDislikesSuccess,
+  updateLikes,
+  updateLikesFailure,
+  updateLikesSuccess,
   updateUser,
   updateUserFailure,
   updateUserSuccess,
-  UserTweet,
-  UserTweetFailure,
-  UserTweetSuccess,
+
 } from '../../actions/user/user.actions';
 
 @Injectable()
@@ -99,29 +118,85 @@ this.actions$.pipe(
 )
 );
 
-$ = createEffect(() =>
-this.actions$.pipe(
-  ofType(loginUser),
-  mergeMap((action) =>
-    this.userService.login(action.data).pipe(
-      map((data) => loginUserSuccess({ data })),
-      catchError((error) => of(loginUserFailure({ error })))
-    )
-  )
-)
-);
 
 createUserTweets$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(UserTweet),
+      ofType(createTweet),
       mergeMap((action) =>
         this.userService.createTweets(action.data).pipe(
-          map((data) => UserTweetSuccess({ data })),
-          catchError((error) => of(UserTweetFailure({ error })))
+          map((data) => createTweetSuccess({ data })),
+          catchError((error) => of(createTweetFailure({ error })))
         )
       )
     )
   );
 
+loadTweets$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadTweets),
+      mergeMap((action) =>
+        this.userService.getTweets().pipe(
+          map((data) => loadTweetSuccess({ data })),
+          catchError((error) => of(loadTweetFailure({ error })))
+        )
+      )
+    )
+  );
+updateLikes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateLikes),
+      mergeMap((action) =>
+        this.userService.incrementLike(action.data).pipe(
+          map((data) => updateLikesSuccess({ data })),
+          catchError((error) => of(updateLikesFailure({ error })))
+        )
+      )
+    )
+  );
+updateDisikes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateDislikes),
+      mergeMap((action) =>
+        this.userService.decrementLike(action.data).pipe(
+          map((data) => updateDislikesSuccess({ data })),
+          catchError((error) => of(updateDislikesFailure({ error })))
+        )
+      )
+    )
+  );
+  createComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createComment),
+      mergeMap((action) =>
+        this.userService.createComments(action.data).pipe(
+          map((data) => createCommentSuccess({ data })),
+          catchError((error) => of(createCommentFailure({ error })))
+        )
+      )
+    )
+  );
+
+loadComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadComments),
+      mergeMap((action) =>
+        this.userService.geComments().pipe(
+          map((data) => loadCommentsSuccess({ data })),
+          catchError((error) => of(loadCommentsFailure({ error })))
+        )
+      )
+    )
+  );
+  updateComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateComments),
+      mergeMap((action) =>
+        this.userService.updateComment(action.data).pipe(
+          map((data) => updateCommentsSuccess({ data })),
+          catchError((error) => of(updateCommentsFailure({ error })))
+        )
+      )
+    )
+  );
   constructor(private actions$: Actions, private userService: UserService) {}
 }

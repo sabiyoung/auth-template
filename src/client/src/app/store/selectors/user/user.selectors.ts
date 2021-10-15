@@ -15,8 +15,13 @@ export const selectedUserSelector = createSelector(
 )
 
 
+
 export const UserTweetSelector = createSelector(
   userFeatureSelector,
   (state) => state.userTweet
 )
 
+export const CommentSelector = createSelector(
+  userFeatureSelector,
+  (state) => state.comments
+)

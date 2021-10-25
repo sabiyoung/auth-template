@@ -1,4 +1,109 @@
 
-<app-users-list [selectedUser]="selectedUser$ | async" [users]="(users$ | async)!"></app-users-list>
 
 
+    <div class="container">
+
+      <div class="first-container">
+        <app-side-bar></app-side-bar>
+      </div>
+    <div class="middle-container">
+  
+      <div class="banner">
+        <img src="https://media-exp1.licdn.com/dms/image/C4D16AQFiYT7Pz9M8Nw/profile-displaybackgroundimage-shrink_200_800/0/1614806816534?e=1640217600&v=beta&t=5wHXzIURqgqgN57QduXRg5lh_gCf7PJuSBIbaJjXwz8" alt="">
+      </div>
+
+   <div class="follower" *ngFor="let user of users$ | async">
+    <span>
+      <img
+    mat-card-image
+    class="imgs"
+    src="https://media-exp1.licdn.com/dms/image/C4E03AQF887Drlc8zlA/profile-displayphoto-shrink_200_200/0/1614753886064?e=1640217600&v=beta&t=m8exz7HOUbitlzwSOVClRRnoLlacUPIku94Hud00ueM"
+    alt="image"
+  />
+    </span>
+  <span class="user-follower">
+<button class="more-icon"> <mat-icon >more</mat-icon></button>
+    <button class="user-follower-button"  (click)="updateFollowers(user)">Follow</button>
+  </span>
+   </div>
+    <div class="post__headerText">
+           <div>
+        <p *ngFor='let user of users$ | async'>
+          <span className="post__headerSpecial">  <b> {{user.name}}, Web Developer</b>
+            <br>   @{{user.username}} <br>
+          </span>
+       <span>
+        Full-stack web developer who builds & maintains lovely websites for my <br>
+        happy clients. I also offer free web dev tutorials & friendly advice. :)
+       </span>
+       <span class="icons">
+       <span> <mat-icon class="icon"> place</mat-icon> Las Vegas,USA</span>
+     <span>   <mat-icon  class="icon"> insert_link</mat-icon><span class="sabi">sabiyoung.com</span></span>
+       <span> <mat-icon  class="icon">date_range</mat-icon>Joined March 2020</span>
+       </span>
+       <app-follower-list></app-follower-list>
+         <span>
+        Following {{user.following!.length}}  Followers{{user.friends!.length}}
+         </span>
+        </p>
+      </div>
+      <div class="post__header">
+        <ul class="post_tweet">
+          <li *ngFor="let tweet of tweets$ | async">
+            <app-user-page></app-user-page>
+
+            <span [innerHTML]="tweet.text"></span> <br />
+
+            <mat-icon class="tweet_likes"> chat_bubble_outline</mat-icon>
+            <!-- {{comment.text.length}} -->
+            <mat-icon class="tweet_likes">repeat_icon</mat-icon>
+            <mat-icon class="tweet_likes" (click)="onIncrement(tweet)"
+              >favorite</mat-icon>
+              <span class="span-like"> {{ tweet.likes }}</span>
+            <mat-icon class="tweet_likes">share</mat-icon>
+            <br />
+            <!-- <span>
+              <input class="input-tweetOne" type="text" placeholder="Tweet your reply" #Input />
+              <button   class="tweetBox_tweet" (click)="createComment(Input.value, tweet)">
+                reply
+              </button></span
+            > -->
+            <!-- <ng-container *ngFor="let comment of comments$ | async">
+              <p class="post_tweet" *ngIf="comment.tweetID === tweet._id">
+             <span>   {{ comment.text }}</span>
+              </p>
+            </ng-container> -->
+
+            <br />
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    </div>
+    <div class="last-container">
+        <div class="tweet-container">
+          <h2>What's happening</h2>
+          <div class="tweet__input">
+            <mat-icon class="searchIcon">search</mat-icon>
+            <input placeholder="Search Twitter" type="text" />
+          </div>
+          <!-- <app-user-page></app-user-page> -->
+          <b>  Adele releases new single Easy on Me</b>
+          <p>
+
+  Adele’s latest single Easy On Me has <br>
+   been released, givingfans their first <br>
+   glimpse into 30, the singer’s <br>
+   first studio album in six years.
+   <br> Keep it here for updates and reactions.
+          </p>
+          <img
+            mat-card-image
+            class="images"
+            src=" https://pbs.twimg.com/semantic_core_img/1448353664628756480/KUJPEd-1?format=jpg&name=small"
+            alt="image"
+          />
+        </div>
+      </div>
+    </div>

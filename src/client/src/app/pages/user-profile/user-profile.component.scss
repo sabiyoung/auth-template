@@ -1,4 +1,143 @@
-.images {
-  height: 200px;
-  width: 300px;
+.imgs {
+  height: 100px;
+  width: 100px;
+  border-radius: 60%;
+}
+.container
+{
+  display: flex;
+  height: 100vh;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 10px;
+}
+.middle-container {
+  width: 960px !important;
+  flex: 0.8;
+  border-right: 1px solid #e6ecf0;
+  overflow-y: scroll;
+}
+.middle-container::-webkit-scrollbar {
+  display: none;
+}
+
+li {
+  list-style: none;
+
+}
+.tweet_likes {
+  font-size: 18px;
+  justify-content: space-evenly;
+  padding-left: 30px;
+  padding: 20px;
+  color: gray;
+  cursor: pointer;
+}
+.tweetBox_tweet {
+  background-color: #50b7f5;
+  border: none !important;
+  color: white !important;
+  font-weight: 900 !important;
+  text-transform: inherit !important;
+  border-radius: 30px !important;
+  width: 60px;
+  height: 30px !important;
+  margin-top: 7px !important;
+cursor: pointer;
+}
+.input-tweetOne {
+  padding-left: 50px;
+  margin-left: 10px;
+  border: none;
+ text-align:left;
+ font-size: 17px;
+}
+.post_tweet{
+  border-bottom: 1px solid #e6ecf0;
+}
+.last-container {
+flex: 0.3;
+}
+.tweet-button{
+  display: flex;
+ .gif{
+  font-size: 30px;
+ }
+ }
+ .tweet-icons {
+   margin-top: 25px;
+   padding-left: 22px;
+   color: #50b7f5;
+   cursor: pointer;
+ }
+ .post {
+   display: flex;
+   align-items: flex-start;
+   border-bottom: 1px solid #e6ecf0;
+   padding-bottom: 10px;
+ }
+ .images {
+   height: 200px;
+   width: 300px;
+ }
+ .tweet__input{
+  display: flex;
+  align-items: center;
+  background-color: #e6ecf0;
+  padding: 10px;
+  border-radius: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+margin-bottom: 40px;
+}
+.tweet__input > input {
+  border: none;
+  background-color:#e6ecf0;
+ ;
+}
+.icons {
+  display: flex;
+  color: gray;
+
+}
+.icon {
+  padding-left: 40px;
+  padding-top: 15px;
+}
+.sabi {
+  color: #50b7f5;
+}
+
+.follower
+{
+  display: flex;
+  justify-content: space-between;
+}
+.user-follower-button {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background-color: #111;
+  border: none;
+  border-radius: 20px;
+  padding: 12px;
+  margin-right: 10px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.more-icon {
+  padding: 5px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 50%;
+  border-color: #555;
+  cursor: pointer;
+}
+.banner {
+  height: 150px;
+}
+.user-follower
+{
+  margin-top: 60px;
 }

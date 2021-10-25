@@ -15,9 +15,14 @@ import {
   selectUserAction,
   updateCommentsSuccess,
   updateDislikesSuccess,
+  updateFollowers,
+  updateFollowersSuccess,
+  updateFollowing,
+  updateFollowingSuccess,
   updateLikesSuccess,
   updateUserSuccess,
 } from '../../actions/user/user.actions';
+
 
 export const userFeatureKey = 'user';
 
@@ -26,13 +31,17 @@ export interface State {
   selectedUser: User | null;
   userTweet: Tweet[];
   comments: Comment[];
+ followers:[];
+ following:[]
 }
 
 export const initialState: State = {
   users: [],
   selectedUser: null,
   userTweet: [],
-  comments: []
+  comments: [],
+ followers:[],
+ following: []
 };
 
 export const reducer = createReducer(
@@ -72,9 +81,6 @@ export const reducer = createReducer(
     return { ...state, userTweet: state.userTweet.map(tweet => tweet._id === action.data._id ? action.data : tweet) };
   }),
 
-  on(updateDislikesSuccess, (state, action) => {
-    return { ...state, userTweet: state.userTweet.map(tweet => tweet._id === action.data._id ? action.data : tweet) };
-  }),
   on(loadTweetSuccess, (state, action) => {
     return {...state, userTweet: action.data}
   }),
@@ -89,5 +95,11 @@ export const reducer = createReducer(
   }),
   on(updateCommentsSuccess, (state, action) => {
     return { ...state, comments: state.comments.map(comment => comment._id === action.data._id ? action.data : comment) };
+  }),
+  on(updateFollowersSuccess, (state, action) => {
+    return { ...state, users: state.users.map(user => user._id === action.data._id ? action.data : user)};
+  }),
+  on(updateFollowingSuccess, (state, action) => {
+    return { ...state, users: state.users.map(user => user._id === action.data._id ? action.data : user)};
   }),
 );

@@ -29,12 +29,22 @@ import {
   loginUser,
   loginUserFailure,
   loginUserSuccess,
+  logoutNavigateSuccess,
+  logoutUser,
+  logoutUserFailure,
+  logoutUserSuccess,
   updateComments,
   updateCommentsFailure,
   updateCommentsSuccess,
   updateDislikes,
   updateDislikesFailure,
   updateDislikesSuccess,
+  updateFollowers,
+  updateFollowersFailure,
+  updateFollowersSuccess,
+  updateFollowing,
+  updateFollowingFailure,
+  updateFollowingSuccess,
   updateLikes,
   updateLikesFailure,
   updateLikesSuccess,
@@ -46,6 +56,7 @@ import {
 
 @Injectable()
 export class UserEffects {
+
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUsers),
@@ -105,7 +116,6 @@ export class UserEffects {
     )
   )
 );
-
 loginSuccess$ = createEffect(() =>
 this.actions$.pipe(
   ofType(loginUserSuccess),
@@ -117,7 +127,17 @@ this.actions$.pipe(
   )
 )
 );
-
+logoutUsers$ = createEffect(() =>
+this.actions$.pipe(
+  ofType(logoutUser),
+  mergeMap((action) =>
+    this.userService.logout().pipe(
+      map((data) => logoutUserSuccess()),
+      catchError((error) => of(logoutUserFailure()))
+    )
+  )
+)
+);
 
 createUserTweets$ = createEffect(() =>
     this.actions$.pipe(
@@ -153,17 +173,30 @@ updateLikes$ = createEffect(() =>
       )
     )
   );
-updateDisikes$ = createEffect(() =>
+updateFollowers$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(updateDislikes),
+      ofType(updateFollowers),
       mergeMap((action) =>
-        this.userService.decrementLike(action.data).pipe(
-          map((data) => updateDislikesSuccess({ data })),
-          catchError((error) => of(updateDislikesFailure({ error })))
+        this.userService.updateUsersFollowers(action.data).pipe(
+          map((data) => updateFollowersSuccess({ data })),
+          catchError((error) => of(updateFollowersFailure({ error })))
         )
       )
     )
   );
+  updateFollowing$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateFollowing),
+      mergeMap((action) =>
+        this.userService.updateUsersFollowing(action.data).pipe(
+          map((data) => updateFollowingSuccess({ data })),
+          catchError((error) => of(updateFollowingFailure({ error })))
+        )
+      )
+    )
+  );
+  //
+
   createComments$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createComment),

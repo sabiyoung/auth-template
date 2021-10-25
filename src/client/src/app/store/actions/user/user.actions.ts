@@ -81,6 +81,17 @@ export const loginUserFailure = createAction(
   '[User] Login User Failure',
   props<{ error: Error }>()
 );
+//
+export const logoutUser = createAction(
+  '[User] Logout User',
+);
+export const logoutUserSuccess = createAction(
+  '[User] Logout User Success',
+);
+export const logoutUserFailure = createAction(
+  '[User] Logout User Failure',
+);
+//
 export const createTweet = createAction(
   '[User] Create Tweet',
   props<{data: Tweet}>()
@@ -112,6 +123,11 @@ export const loadTweetFailure = createAction(
 export const loginNavigateSuccess = createAction(
   '[User]  login navivage success',
 );
+
+export const logoutNavigateSuccess = createAction(
+  '[User]  logout navivage success',
+);
+
 
 export const updateLikes = createAction(
   '[User]  Update Likes',
@@ -174,7 +190,38 @@ export const updateCommentsSuccess = createAction(
   '[User]  Update Comments Success',
   props<{ data: Comment}>()
 );
+
 export const updateCommentsFailure = createAction(
   '[User] Update Comments Failure',
   props<{ error: Error }>()
 );
+// followers
+export const updateFollowers = createAction(
+  '[User]  Update User Followers',
+  props<{data: User}>()
+);
+export const updateFollowersSuccess = createAction(
+  '[User]  Update User Followers Success',
+  props<{ data: User}>()
+);
+export const updateFollowersFailure = createAction(
+  '[User] Update User Followers Failure',
+  props<{ error: Error }>()
+);
+export const updateFollowing = createAction(
+  '[User] Update User Following',
+  props<{data: User}>()
+);
+export const updateFollowingSuccess = createAction(
+  '[User]  Update User Following Success',
+  props<{ data: User}>()
+);
+
+export const updateFollowingFailure = createAction(
+  '[User] Update User Following Failure',
+  props<{ error: Error }>()
+);
+export const loadFollowing = createAction(
+  '[User] load Following',
+);
+

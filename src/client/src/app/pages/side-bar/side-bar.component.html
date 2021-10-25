@@ -1,10 +1,12 @@
 
 <div class="sidebar">
   <div class="sidebar__twitterIcon">
-  <img src="https://www.freeiconspng.com/thumbs/twitter-icon/twitter-icon-download-18.png"/>
+  <img src="https://www.freeiconspng.com/thumbs/twitter-icon/twitter-icon-download-18.png"
+   (click)="home()"
+  />
 
   </div>
-  <div class="icons"><mat-icon >home</mat-icon><p>Home</p></div>
+  <div class="icons"><mat-icon>home</mat-icon><p>Home</p></div>
   <div class="icons"><mat-icon>#</mat-icon><p>Explore</p></div>
   <div class="icons"><mat-icon>notifications_none</mat-icon><p>Notifications</p></div>
   <div class="icons">	<mat-icon> mail_outline</mat-icon><p>Messages</p></div>
@@ -18,3 +20,19 @@
 
 </div>
 
+<!-- <app-user-page></app-user-page> -->
+<div class="profile">
+  <img
+  mat-card-image
+  class="imgs"
+  src="https://media-exp1.licdn.com/dms/image/C4E03AQF887Drlc8zlA/profile-displayphoto-shrink_200_200/0/1614753886064?e=1640217600&v=beta&t=m8exz7HOUbitlzwSOVClRRnoLlacUPIku94Hud00ueM"
+  alt="image"
+/>
+<p *ngFor='let user of users$ | async'>
+  <span className="post__headerSpecial">  <b> {{user.name}}</b>
+    <br>   @{{user.username}}
+  </span>
+</p>
+</div>
+
+<button class="signout" (click)="logout()">Log out</button>

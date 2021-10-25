@@ -30,6 +30,9 @@ export class UserService {
   getLikes() {
     return this.api.get<{ data: Tweet[] }>('tweets').pipe(map((res) => res.data));
   }
+  getFollowers() {
+    return this.api.get<{ data: User[] }>('users').pipe(map((res) => res.data));
+  }
   createUser(user: User) {
     return this.api
       .post<{ data: User }>('create-user', user)
@@ -53,20 +56,31 @@ export class UserService {
       .pipe(map((res) => res.data));
   }
   loginNavigate() {
-    return of(this.router.navigate(['users-post']))
+    return of(this.router.navigate(['home']))
   }
+  //
+  logout() {
+    this.router.navigate(['/sign-in']);
+    return this.api.get('logout')
+        }
+
+
   updateUser(user: User) {
     return this.api.put<User, User>('update-user/' + user._id, user);
   }
+  updateUsersFollowers(user: User) {
+    return this.api.put<User, User>('update-followers/' + user._id, user);
+  }
+  updateUsersFollowing(user: User) {
+    return this.api.put<User, User>('update-following/' + user._id, user);
+  }
  incrementLike(tweet: Tweet) {
-   console.log("tweet")
     return this.api.put<Tweet, Tweet>('increment-tweet-like/' + tweet._id, tweet );
   }
  decrementLike(tweet: Tweet) {
     return this.api.put<Tweet, Tweet>('decrement-tweet-like/' + tweet._id, tweet);
   }
  updateComment(comment: Comment) {
-    // console.log("comment")
      return this.api.put<Comment,Comment>('update-comment/' + comment._id, comment );
    }
   deleteUser(user: User) {

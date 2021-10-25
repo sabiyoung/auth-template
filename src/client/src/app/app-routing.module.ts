@@ -7,15 +7,16 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { RegisterPageComponent } from './pages/register-page/register-page.component';
 import { UserPageComponent } from './pages/user-page/user-page.component';
 import { UserPostPageComponent } from './pages/user-post-page/user-post-page.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 
 
 const routes: Routes = [
 
    {path: 'sign-in', component: LoginPageComponent},
-  {path: 'users-post', component: UserPostPageComponent},
+  {path: 'home', component: UserPostPageComponent},
   {path: '', component: HomePageComponent},
-  {path: '**', redirectTo:" sign-up"}
-
+  {path: '**', redirectTo:" sign-up"},
+  {path: 'user-profile', component: UserProfileComponent},
 
 ];
 

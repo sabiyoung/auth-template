@@ -26,6 +26,7 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
 import { FollowerListComponent } from './pages/follower-list/follower-list.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+
 @NgModule({
 
   declarations: [
@@ -39,9 +40,9 @@ import {MatIconModule} from '@angular/material/icon';
     SideBarComponent,
     RegisterPageComponent,
     UserPostPageComponent,
-
     UserProfileComponent,
-      FollowerListComponent
+      FollowerListComponent,
+
   ],
   imports: [
     BrowserModule,

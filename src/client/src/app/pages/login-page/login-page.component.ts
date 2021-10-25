@@ -5,6 +5,7 @@ import { AppState } from 'src/app/store';
 import { createUser, loginUser, updateUser } from 'src/app/store/actions/user/user.actions';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../../../../../shared/models/user.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
@@ -16,6 +17,7 @@ export class LoginPageComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
      private store: Store<AppState>,
+     private router: Router
     ) {
     this.addUser = this.fb.group({
       email: [
@@ -33,6 +35,9 @@ export class LoginPageComponent implements OnInit {
 
 login() {
     this.store.dispatch(loginUser({ data: this.addUser.value }))
+  }
+  signin() {
+    this.router.navigate(['/'])
   }
 }
 

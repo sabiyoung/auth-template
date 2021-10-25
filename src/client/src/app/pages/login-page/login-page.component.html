@@ -1,7 +1,20 @@
-<!-- <p>login-page works!</p> -->
+
+
+
+<div class="container">
+  <img src="https://www.freeiconspng.com/thumbs/twitter-icon/twitter-icon-download-18.png"/>
+  <span class="login">Log in to Twitter</span>
 <form [formGroup] = 'addUser'>
   <input type="text" formControlName='email' placeholder="email"> <br>
   <input type="text" formControlName='password' placeholder="password"> <br>
   <button (click)="login()">Signin</button>
 </form>
+</div>
 
+<div class="wrapper-signin">
+
+  <span>
+ Forgot password? <span class="signIn" (click)="signin()">Sign up for Twitter</span>
+  </span>
+
+  </div>

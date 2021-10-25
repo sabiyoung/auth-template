@@ -1,8 +1,48 @@
 input
  {
-   padding: 5px;
+   padding: 14px;
+   padding-left: 130px;
    margin: 5px;
+   border: none;
+   border-bottom: solid 3px gray;
  }
 form {
   margin: 20px;
+}
+.container {
+  // background-color: #50b7f5;
+  padding: 50px;
+  padding-left: 400px;
+}
+button {
+  padding: 15px;
+   padding-left: 140px;
+   padding-right: 140px;
+   text-align: center;
+   border-radius: 20px;
+   border: none;
+   margin-top: 30px;
+   cursor: pointer;
+   background-color: #50b7f5;
+   color: #fff;
+}
+img {
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  padding: 10px;
+  margin-left: 70px;
+  margin-bottom: 50px;
+
+}
+.signIn {
+  cursor: pointer;
+}
+.wrapper-signin {
+  padding-left: 430px;
+  color: #50b7f5;
+}
+.login {
+  font-size: 20px;
+  font-weight: 500;
 }

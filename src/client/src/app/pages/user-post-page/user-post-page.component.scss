@@ -2,6 +2,7 @@
   height: 50px;
   width: 50px;
   border-radius: 60%;
+  cursor: pointer;
 }
 .tweet-box {
   display: flex;
@@ -16,7 +17,6 @@
 margin-left: 60px;
 }
 .main-container{
-
   display: flex;
   height: 100vh;
   max-width: 1300px;
@@ -76,7 +76,7 @@ margin-left: 60px;
   width: 80px;
   height: 40px !important;
   margin-top: 20px !important;
- margin-left: 150px;
+ margin-left: 300px;
 cursor: pointer;
 }
 .input-tweet {
@@ -190,6 +190,11 @@ cursor: pointer;
 .last-container {
 flex: 0.3;
 }
-// .span-like {
-// margin-right: 50px;
-// }
+
+
+.upload-button
+{
+border: none;
+padding: 10px;
+border-radius: 20px;
+}

@@ -11,25 +11,33 @@
         <img
           mat-card-image
           class="imgs"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvjMMGl4wi4Xt2BD4jhnmdrW9abK9CFjvCAQ&usqp=CAU"
+          src="https://media-exp1.licdn.com/dms/image/C4E03AQF887Drlc8zlA/profile-displayphoto-shrink_200_200/0/1614753886064?e=1640217600&v=beta&t=m8exz7HOUbitlzwSOVClRRnoLlacUPIku94Hud00ueM"
           alt="image"
+          (click)="profile()"
         />
         <input class="input-tweet" placeholder="What's happening?" #Input />
       </div>
 
+      <div style="text-align: center">
+        <form>
+            <input id="upload-input" type="file" name="image" (change)="selectImage($event)" />
+            <button class="upload-button" type="submit" (click)="onSubmit()">Upload</button>
+
+        </form>
+      </div>
+
       <div class="tweet-button">
-        <!-- <button class="upload">upload</button> -->
         <mat-icon class="tweet-icons">image</mat-icon>
         <mat-icon class="tweet-icons gif">gif</mat-icon>
         <mat-icon class="tweet-icons">poll</mat-icon>
         <mat-icon class="tweet-icons"> sentiment_satisfied_alt</mat-icon>
         <mat-icon class="tweet-icons">schedule</mat-icon>
         <button
-          class="tweetBox__tweetButton"
-          (click)="createTweet(Input.value)"
-        >
-          tweet
-        </button>
+        class="tweetBox__tweetButton"
+        (click)="createTweet(Input.value)"
+      >
+        tweet
+      </button>
       </div>
     </div>
 
@@ -38,7 +46,7 @@
         <div class="post__header">
           <ul class="post_tweet">
             <li *ngFor="let tweet of tweets$ | async">
-              <app-user-profile></app-user-profile>
+              <app-user-page></app-user-page>
 
               <span [innerHTML]="tweet.text"></span> <br />
 
@@ -63,6 +71,7 @@
               </ng-container>
 
               <br />
+
             </li>
           </ul>
         </div>
@@ -76,7 +85,7 @@
           <mat-icon class="searchIcon">search</mat-icon>
           <input placeholder="Search Twitter" type="text" />
         </div>
-        <app-user-profile></app-user-profile>
+        <app-user-page></app-user-page>
         <b>  Adele releases new single Easy on Me</b>
         <p>
 

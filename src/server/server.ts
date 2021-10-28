@@ -16,13 +16,15 @@ import { CommentModel } from "./schemas/comment.schema.js";
 import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
 import bodyParser from "body-parser";
+import path from 'path'
+const __dirname = path.resolve()
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 console.log(access_secret);
 
 const saltRounds = 10;
 const app = express();
-const PORT = 3502;
+const PORT = 3000;
 let gfs;
 
 const mongoURI = "mongodb://localhost:27017/test";
@@ -70,6 +72,7 @@ app.use(
   cors({
     credentials: true,
     origin: [
+      "http://localhost:3000",
       "http://localhost:4200",
       "http://localhost:3502",
       "http://localhost:8080",
@@ -362,6 +365,14 @@ app.post("/login", function (req, res) {
       return res.sendStatus(404);
     });
 });
+const clientPath = path.join(__dirname, '/dist/client');
+app.use(express.static(clientPath));
+app.get("/", function (req, res) {
+  const filePath = path.join(__dirname, '/dist/client/index.html');
+  console.log(filePath);
+  res.sendFile(filePath);
+});
+
 
 const server = createServer(app);
 let io = new Server(server, {

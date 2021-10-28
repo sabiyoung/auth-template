@@ -24,7 +24,7 @@ const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
 
 const saltRounds = 10;
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 let gfs;
 
 

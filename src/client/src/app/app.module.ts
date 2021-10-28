@@ -27,6 +27,7 @@ import { FollowerListComponent } from './pages/follower-list/follower-list.compo
 import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 
+
 @NgModule({
 
   declarations: [
@@ -42,6 +43,7 @@ import {MatIconModule} from '@angular/material/icon';
     UserPostPageComponent,
     UserProfileComponent,
       FollowerListComponent,
+  
 
   ],
   imports: [

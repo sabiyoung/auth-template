@@ -20,16 +20,17 @@ import path from 'path'
 const __dirname = path.resolve()
 dotenv.config();
 const access_secret = process.env.ACCESS_TOKEN_SECRET as string;
-console.log(access_secret);
+
 
 const saltRounds = 10;
 const app = express();
 const PORT = 3000;
 let gfs;
 
+
 const mongoURI = "mongodb://localhost:27017/test";
 mongoose
-  .connect(mongoURI)
+.connect(`${process.env.MONGO_URL}`)
   .then(async () => {
     console.log("Connected to DB Successfully");
     gfs = new mongoose.mongo.GridFSBucket(mongoose.connection.db, {
@@ -52,7 +53,7 @@ mongoose
 
   .catch((err) => console.log("Failed to Connect to DB", err));
 const storage = new GridFsStorage({
-  url: mongoURI,
+  url:`${process.env.MONGO_URI}`,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       const fileInfo = {
@@ -81,11 +82,7 @@ app.use(
 );
 app.use(express.json());
 
-app.get("/", function (req, res) {
-  res.json({ message: "test" });
-});
-
-app.post("/file", upload.single("file"), (req, res, next) => {
+app.post("/api/file", upload.single("file"), (req, res, next) => {
   res.redirect("/");
   const file = req.file;
   console.log(file!.filename);
@@ -109,7 +106,7 @@ function whoIsFollowingMe(_id: any) {
   return UserModel.find({ following: _id }).count();
 }
 
-app.get("/get-all-users", function (req, res) {
+app.get("/api/get-all-users", function (req, res) {
   UserModel.find()
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -128,7 +125,7 @@ function followUser(userId: any, followId: any) {
     { new: true }
   ).populate("following");
 }
-app.put("/update-following/:id", function (req, res) {
+app.put("/api/update-following/:id", function (req, res) {
   console.log("Update following");
   UserModel.findByIdAndUpdate(
     req.params.id,
@@ -164,7 +161,7 @@ app.put("/update-following/:id", function (req, res) {
 //   )
 // }
 
-app.get("/posts", function (req, res) {
+app.get("/api/posts", function (req, res) {
   PostModel.find()
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -174,7 +171,7 @@ app.get("/posts", function (req, res) {
 });
 
 ///////
-app.get("/tweets", function (req, res) {
+app.get("/api/tweets", function (req, res) {
   TweetModel.find()
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -183,7 +180,7 @@ app.get("/tweets", function (req, res) {
     });
 });
 
-app.post("/create-tweet", authHandler, function (req: any, res) {
+app.post("/api/create-tweet", authHandler, function (req: any, res) {
   const { text, img, _id, likes, disLikes } = req.body;
   const newTweet = new TweetModel({
     text,
@@ -204,7 +201,7 @@ app.post("/create-tweet", authHandler, function (req: any, res) {
 
 //////
 ///// comments
-app.get("/comments", function (req, res) {
+app.get("/api/comments", function (req, res) {
   CommentModel.find()
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -213,7 +210,7 @@ app.get("/comments", function (req, res) {
     });
 });
 
-app.post("/create-comment", authHandler, function (req: any, res) {
+app.post("/api/create-comment", authHandler, function (req: any, res) {
   const { text, img, tweet } = req.body;
   const newComment = new CommentModel({
     text,
@@ -233,7 +230,7 @@ app.post("/create-comment", authHandler, function (req: any, res) {
 });
 
 /////
-app.put("/increment-tweet-like/:id", function (req, res) {
+app.put("/api/increment-tweet-like/:id", function (req, res) {
   console.log("Update user like");
   TweetModel.findByIdAndUpdate(
     req.params.id,
@@ -253,7 +250,7 @@ app.put("/increment-tweet-like/:id", function (req, res) {
   );
 });
 
-app.get("/users", authHandler, function (req: any, res) {
+app.get("/api/users", authHandler, function (req: any, res) {
   UserModel.find({ email: req.user.email }, "-password")
     .then((data) => res.json({ data }))
     .catch((err) => {
@@ -261,7 +258,7 @@ app.get("/users", authHandler, function (req: any, res) {
       res.json({ errors: err });
     });
 });
-app.post("/create-user", function (req, res) {
+app.post("/api/create-user", function (req, res) {
   const { name, email, username, password, followers, following } = req.body;
   console.log(req.body);
   bcrypt.genSalt(saltRounds, function (err, salt) {
@@ -287,7 +284,7 @@ app.post("/create-user", function (req, res) {
   });
 });
 
-app.post("/create-post", function (req, res) {
+app.post("/api/create-post", function (req, res) {
   const { title, body } = req.body;
   const post = new PostModel({
     title,
@@ -304,7 +301,7 @@ app.post("/create-post", function (req, res) {
     });
 });
 
-app.delete("/delete-user/:id", function (req, res) {
+app.delete("/api/delete-user/:id", function (req, res) {
   const _id = req.params.id;
   UserModel.findByIdAndDelete(_id).then((data) => {
     console.log(data);
@@ -312,7 +309,7 @@ app.delete("/delete-user/:id", function (req, res) {
   });
 });
 
-app.put("/update-user/:id", function (req, res) {
+app.put("/api/update-user/:id", function (req, res) {
   console.log("Update user");
   UserModel.findByIdAndUpdate(
     req.params.id,
@@ -332,7 +329,7 @@ app.put("/update-user/:id", function (req, res) {
   );
 });
 
-app.get("/logout", authHandler, function (req, res) {
+app.get("/api/logout", authHandler, function (req, res) {
   res.cookie("jwt", "", {
     httpOnly: true,
     maxAge: 60 * 1000,
@@ -340,7 +337,7 @@ app.get("/logout", authHandler, function (req, res) {
   res.json({ message: "Successfully Logged out" });
 });
 
-app.post("/login", function (req, res) {
+app.post("/api/login", function (req, res) {
   const { email, password } = req.body;
 
   UserModel.findOne({ email })
@@ -365,9 +362,13 @@ app.post("/login", function (req, res) {
       return res.sendStatus(404);
     });
 });
+app.all("/api/*", function (req, res) {
+  res.sendStatus(404);
+});
+
 const clientPath = path.join(__dirname, '/dist/client');
 app.use(express.static(clientPath));
-app.get("/", function (req, res) {
+app.get("*", function (req, res) {
   const filePath = path.join(__dirname, '/dist/client/index.html');
   console.log(filePath);
   res.sendFile(filePath);
